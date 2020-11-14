@@ -1,0 +1,6 @@
+{
+    "diff": {
+        "format": "git"
+    },
+    "sourceDir": "/etc/nixos/chezmoi"
+}

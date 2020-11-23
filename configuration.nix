@@ -72,6 +72,7 @@ in
     alacritty
     chezmoi
     chromium
+    dbeaver
     emacs
     filezilla
     firefox

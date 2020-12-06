@@ -72,6 +72,7 @@ in
     alacritty
     chezmoi
     chromium
+    clipmenu
     dbeaver
     emacs
     filezilla
@@ -93,6 +94,7 @@ in
     mosh
     ncspot
     networkmanager
+    nomacs
     ntfs3g
     openvpn
     pass
@@ -102,9 +104,11 @@ in
     pulseaudio
     ranger
     scrcpy
+    seafile-client
     thunderbird
     udevil
     unar
+    vlc
   ];  
 
   environment.variables = {
@@ -115,6 +119,7 @@ in
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   programs.adb.enable = true;
+  programs.seahorse.enable = true;
   # programs.mtr.enable = true;
   programs.gnupg.agent = {
     enable = true;
@@ -149,12 +154,14 @@ in
   # Enable touchpad support.
   # services.xserver.libinput.enable = true;
 
-  # Enable the KDE Desktop Environment.
-  # services.xserver.displayManager.sddm.enable = true;
-  # services.xserver.desktopManager.plasma5.enable = true;
   services.xserver.windowManager.i3.enable = true;
+  services.xserver.displayManager.lightdm.enable = true;
   services.xserver.desktopManager.wallpaper.combineScreens = false;
   services.xserver.desktopManager.wallpaper.mode = "fill";
+
+  # Enable keychain
+  services.gnome3.gnome-keyring.enable = true;
+  security.pam.services.lightdm.enableGnomeKeyring = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   # users.users.jane = {

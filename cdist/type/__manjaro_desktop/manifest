@@ -1,0 +1,65 @@
+user="schrofi"
+home="/home/schrofi"
+
+# setup user
+__user "$user" --home "$home" --shell /bin/bash
+require="__user/$user" __directory "$home" \
+       --owner "$user" --group "$user" --mode 0755
+
+# install packages
+__package_update_index
+require="__package_update_index" __package_upgrade_all
+
+package_list="
+    alacritty
+    chezmoi
+    chromium
+    clipmenu
+    dbeaver
+    emacs
+    filezilla
+    firefox
+    fish
+    flameshot
+    galculator
+    gimp
+    git
+    git-lfs
+    gnupg
+    gparted
+    gradle
+    htop
+    i3-wm
+    i3blocks
+    i3lock
+    i3status
+    jdk-openjdk
+    jre-openjdk
+    libreoffice
+    mosh
+    networkmanager
+    nomacs
+    ntfs-3g
+    openvpn
+    pass
+    pavucontrol
+    pinentry
+    pulseaudio
+    ranger
+    thunderbird
+    udevil
+    unarchiver
+    vlc
+"
+
+# missing AUR packages: android-studio, ncspot, postman, scrcp, seafile-client
+
+for package in $package_list
+    do require="__package_upgrade_all" __package $package --state=present
+done
+
+# setup dotfiles
+__dot_file .config/i3/config --user "$user" --source "$__files/dotfiles/i3/config"
+__dot_file .config/ncspot/config.toml --user "$user" --source "$__files/dotfiles/ncspot/config.toml"
+
+require="__package/emacs" __git "$home/.emacs.d" --source https://github.com/syl20bnr/spacemacs

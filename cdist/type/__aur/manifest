@@ -1,0 +1,11 @@
+#!/bin/sh -e
+
+package="$__object_id"
+user="$(cat "$__object/parameter/user")"
+directory="$(cat "$__object/parameter/directory")"
+packagedir="$directory/$package"
+
+export CDIST_ORDER_DEPENDENCY=on
+__git $packagedir --source https://aur.archlinux.org/$package.git
+require="__git/$packagedir" __directory $directory --owner $user --group $user --recursive
+unset CDIST_ORDER_DEPENDENCY

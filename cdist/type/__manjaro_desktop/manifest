@@ -1,10 +1,15 @@
+#!/bin/sh -e
+
+# vars
 user="schrofi"
 home="/home/schrofi"
 
 # setup user
-__user "$user" --home "$home" --shell /bin/bash
+__user "$user" --home "$home" --shell /bin/fish
 require="__user/$user" __directory "$home" \
        --owner "$user" --group "$user" --mode 0755
+
+__timezone --tz Europe/Vienna
 
 # install packages
 __package_update_index
@@ -55,11 +60,32 @@ package_list="
 # missing AUR packages: android-studio, ncspot, postman, scrcp, seafile-client
 
 for package in $package_list
-    do require="__package_upgrade_all" __package $package --state=present
+do require="__package_upgrade_all" __package $package --state=present
 done
 
 # setup dotfiles
-__dot_file .config/i3/config --user "$user" --source "$__files/dotfiles/i3/config"
-__dot_file .config/ncspot/config.toml --user "$user" --source "$__files/dotfiles/ncspot/config.toml"
+__dot_file .config/i3/config --user "$user" --source "$__type/dotfiles/i3/config"
+__dot_file .config/ncspot/config.toml --user "$user" --source "$__type/dotfiles/ncspot/config.toml"
 
+# those have to be done in order, install spacemacs
+export CDIST_ORDER_DEPENDENCY=on
 require="__package/emacs" __git "$home/.emacs.d" --source https://github.com/syl20bnr/spacemacs
+__directory "$home/.emacs.d" --owner $user --group $user --recursive
+unset CDIST_ORDER_DEPENDENCY
+
+# install aura
+aurdir="$home/Projects/AUR"
+aur_packages="
+  aura-bin
+  android-studio
+  postman-bin
+"
+
+export CDIST_ORDER_DEPENDENCY=on
+
+for package in $aur_packages
+do
+    __aur $package --user $user --directory $aurdir
+done
+
+unset CDIST_ORDER_DEPENDENCY

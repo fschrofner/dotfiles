@@ -73,19 +73,17 @@ require="__package/emacs" __git "$home/.emacs.d" --source https://github.com/syl
 __directory "$home/.emacs.d" --owner $user --group $user --recursive
 unset CDIST_ORDER_DEPENDENCY
 
-# install aura
+# install aur packages
 aurdir="$home/Projects/AUR"
 aur_packages="
   aura-bin
   android-studio
+  ncspot
   postman-bin
+  rescrobbled-git
 "
-
-export CDIST_ORDER_DEPENDENCY=on
 
 for package in $aur_packages
 do
     __aur $package --user $user --directory $aurdir
 done
-
-unset CDIST_ORDER_DEPENDENCY

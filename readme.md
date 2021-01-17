@@ -14,30 +14,22 @@ sudo python setup.py install
 ```
 
 2. Setup SSH root access
-//TODO
-
-3. CD into wanted configuration directory and apply configuration to localhost
+Add the following line into your `/etc/ssh/sshd_config`
 ```
-cdist config -v -i manifest localhost
+PermitRootLogin without-password
 ```
 
-## Getting Started - DEPRECATED NIXOS
-1. Clone the repository into your /etc/nixos directory (delete/rename the existing configuration.nix).
-2. Add the unstable NixOS channel
+Then copy your SSH key to the root user at localhost.
 ```
-nix-channel --add https://nixos.org/channels/nixos-unstable nixos-unstable
+ssh-copy-id root@localhost
 ```
-3. Build the system with the cloned configuration, this will also create the "schrofi" user.
+
+Finally, start the ssh daemon if it is not running
 ```
-nixos-rebuild switch
+sudo systemctl start sshd
 ```
-4. Switch to the user and symlink the chezmoi config to the new users home dir.
+
+3. CD into this repository and execute the following command:
 ```
-mkdir -p ~/.config/chezmoi
-ln -s /etc/nixos/chezmoi.json /home/schrofi/.config/chezmoi/chezmoi.json
+cdist config -vv -c ./cdist localhost
 ```
-5. Apply the configuration
-```
-chezmoi apply
-```
-6. Done

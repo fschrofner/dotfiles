@@ -20,6 +20,7 @@ package_list="
     chezmoi
     chromium
     clipmenu
+    cups
     dbeaver
     emacs
     feh
@@ -45,6 +46,7 @@ package_list="
     mosh
     networkmanager
     nomacs
+    nss-mdns
     ntfs-3g
     openvpn
     pass
@@ -52,6 +54,7 @@ package_list="
     pinentry
     pulseaudio
     ranger
+    signal-desktop
     thunderbird
     udevil
     unarchiver

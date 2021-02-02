@@ -45,6 +45,7 @@ bindsym $mod+Return exec alacritty
 bindsym $mod+y exec passmenu
 bindsym $mod+x exec emacs
 bindsym $mod+c exec firefox
+bindsym Print exec flameshot gui
 
 # kill focused window
 bindsym $mod+Shift+q kill

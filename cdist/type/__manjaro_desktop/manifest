@@ -80,6 +80,7 @@ aurdir="$home/Projects/AUR"
 aur_packages="
   aura-bin
   android-studio
+  cadmus-deb
   ncspot
   postman-bin
   rescrobbled-git

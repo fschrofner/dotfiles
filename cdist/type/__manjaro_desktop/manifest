@@ -52,7 +52,8 @@ package_list="
     pass
     pavucontrol
     pinentry
-    pulseaudio
+    pipewire
+    pipewire-pulse
     ranger
     signal-desktop
     thunderbird

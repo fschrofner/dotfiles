@@ -205,3 +205,5 @@ bar {
     binding_mode       #FF5555 #FF5555 #F8F8F2
   }
 }
+
+for_window [class="Lazarus" instance="*"] floating enable

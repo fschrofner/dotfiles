@@ -43,6 +43,7 @@ package_list="
     jre-openjdk
     libreoffice
     mosh
+    mtpfs
     networkmanager
     nomacs
     nss-mdns

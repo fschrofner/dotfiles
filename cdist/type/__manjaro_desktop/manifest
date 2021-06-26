@@ -17,6 +17,7 @@ require="__package_update_index" __package_upgrade_all
 
 package_list="
     alacritty
+    cadence
     chromium
     clipmenu
     cups
@@ -39,6 +40,8 @@ package_list="
     i3blocks
     i3lock
     i3status
+    jack2
+    jack2-dbus
     jdk-openjdk
     jre-openjdk
     libreoffice
@@ -52,8 +55,8 @@ package_list="
     pass
     pavucontrol
     pinentry
-    pipewire
-    pipewire-pulse
+    pulseaudio
+    pulseaudio-jack
     ranger
     signal-desktop
     thunderbird

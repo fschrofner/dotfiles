@@ -58,6 +58,7 @@ package_list="
     pulseaudio
     pulseaudio-jack
     ranger
+    realtime-privileges
     signal-desktop
     thunderbird
     udevil

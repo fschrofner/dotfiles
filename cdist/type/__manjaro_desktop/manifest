@@ -85,13 +85,12 @@ aurdir="$home/Projects/AUR"
 aur_packages="
   aura-bin
   android-studio
-  cadmus-deb
-  ferdi
   ncspot
   postman-bin
   rescrobbled-git
   scrcpy
   seafile-client
+  slack-desktop
 "
 
 for package in $aur_packages

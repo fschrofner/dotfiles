@@ -17,53 +17,55 @@ require="__package_update_index" __package_upgrade_all
 
 package_list="
     alacritty
+    binutils
     cadence
     chromium
     clipmenu
     cups
     dbeaver
     emacs
+    fakeroot
     feh
     filezilla
     firefox
     fish
     flameshot
     galculator
+    gcc
     gimp
     git
     git-lfs
     gnupg
+    gmp
     gparted
     gradle
+    gtk3
     htop
-    i3-wm
-    i3blocks
-    i3lock
-    i3status
     jack2
     jack2-dbus
     jdk-openjdk
     jre-openjdk
     libreoffice
+    libxss
     mosh
     mtpfs
-    networkmanager
-    nomacs
+    nss
     nss-mdns
     ntfs-3g
     openvpn
     pass
     pavucontrol
-    pinentry
     pulseaudio
     pulseaudio-jack
+    plasma-browser-integration
     ranger
     realtime-privileges
     signal-desktop
-    thunderbird
+    strip-nondeterminism
     udevil
     unarchiver
     vlc
+    zerotier-one
 "
 
 for package in $package_list
@@ -71,7 +73,7 @@ do require="__package_upgrade_all" __package $package --state=present
 done
 
 # setup dotfiles
-__dot_file .config/i3/config --user "$user" --source "$__type/dotfiles/i3/config"
+#__dot_file .config/i3/config --user "$user" --source "$__type/dotfiles/i3/config"
 __dot_file .config/ncspot/config.toml --user "$user" --source "$__type/dotfiles/ncspot/config.toml"
 
 # those have to be done in order, install spacemacs
@@ -82,18 +84,21 @@ unset CDIST_ORDER_DEPENDENCY
 
 # install aur packages
 aurdir="$home/Projects/AUR"
+
+# the installation of the following libraries is failing:
+# aura-bin
+# postman-bin
+# seafile
 aur_packages="
-  aura-bin
   android-studio
   ncspot
-  postman-bin
   rescrobbled-git
   scrcpy
-  seafile-client
-  slack-desktop
 "
 
+export CDIST_ORDER_DEPENDENCY=on
 for package in $aur_packages
 do
     __aur $package --user $user --directory $aurdir
 done
+unset CDIST_ORDER_DEPENDENCY

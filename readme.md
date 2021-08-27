@@ -16,12 +16,17 @@ sudo python setup.py install
 2. Setup SSH root access
 Add the following line into your `/etc/ssh/sshd_config`
 ```
-PermitRootLogin without-password
+PermitRootLogin yes
 ```
 
 Then copy your SSH key to the root user at localhost.
 ```
 ssh-copy-id root@localhost
+```
+
+And change the root login back to
+```
+PermitRootLogin without-password
 ```
 
 Finally, start the ssh daemon if it is not running

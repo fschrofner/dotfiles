@@ -18,7 +18,6 @@ require="__package_update_index" __package_upgrade_all
 package_list="
     alacritty
     binutils
-    cadence
     chromium
     clipmenu
     cups
@@ -41,12 +40,11 @@ package_list="
     gradle
     gtk3
     htop
-    jack2
-    jack2-dbus
     jdk-openjdk
     jre-openjdk
     libreoffice
     libxss
+    manjaro-pipewire
     mosh
     mtpfs
     nss
@@ -54,9 +52,10 @@ package_list="
     ntfs-3g
     openvpn
     pass
-    pavucontrol
-    pulseaudio
-    pulseaudio-jack
+    patch
+    pipewire
+    pipewire-jack
+    pipewire-pulse
     plasma-browser-integration
     ranger
     realtime-privileges
@@ -91,9 +90,11 @@ aurdir="$home/Projects/AUR"
 # seafile
 aur_packages="
   android-studio
+  helvum
   ncspot
   rescrobbled-git
   scrcpy
+  teams
 "
 
 export CDIST_ORDER_DEPENDENCY=on

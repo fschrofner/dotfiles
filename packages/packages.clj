@@ -12,7 +12,7 @@
 (def home (str "/home/" user))
 
 (def packages {
-  :base ["bluez" "chromium" "emacs-gtk3" "fish-shell" "firefox" "flameshot" "flatpak" "git" "htop" "pass" "ranger" "Signal-Desktop" "thunar-archive-plugin" "wget" "xarchiver" "xclip"]
+  :base ["bluez" "chromium" "emacs-gtk3" "fish-shell" "firefox" "flameshot" "flatpak" "git" "htop" "i3" "pass" "ranger" "Signal-Desktop" "thunar-archive-plugin" "wget" "xarchiver" "xclip" "xfce4-i3-workspaces-plugin"]
   :work ["kotlin-bin" "scrcpy"]
 })
 

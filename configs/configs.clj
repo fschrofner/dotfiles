@@ -15,16 +15,29 @@
 
 (def options (:options (parse-opts *command-line-args* cli-options)))
 
+(defn- setup-spacemacs [user home]
+  ;; installing spacemacs
+  (println "setting up spacemacs..")
+  (-> (fs/file (str home "/.emacs.d")) (fs/delete-tree))
+  (safe-sh "git" "clone" "https://github.com/syl20bnr/spacemacs" (str home "/.emacs.d"))
+  (safe-sh "chown" (str user ":" user) "-R" (str home "/.emacs.d"))
+  (println "spacemacs set up"))
+
 (if-let [user (:user options)]
   (let [home (str "/home/" user)]
     ;;todo: fetch spacemacs
     ;;todo: disable locking when closing lid on ac
     (println "applying configuration..")
 
-    ;; installing spacemacs
-    (-> (fs/file (str home "/.emacs.d")) (fs/delete-tree))
-    (safe-sh "git" "clone" "https://github.com/syl20bnr/spacemacs" (str home "/.emacs.d"))
-    (safe-sh "chown" (str user ":" user) "-R" (str home "/.emacs.d"))
+    ;;(setup-spacemacs user home)
+
+    ;;change shell to fish
+    (safe-sh "chsh" "-s" "/usr/bin/fish" user)
+    (println "changed shell to fish")
+
+    (safe-sh "git" "config" "--global" "user.name" "Florian Schrofner")
+    (safe-sh "git" "config" "--global" "user.email" "florian@schro.fi")
+    (println "changed git user data")
 
     (println "configuration applied"))
   (println "error: must provide a user to set up"))

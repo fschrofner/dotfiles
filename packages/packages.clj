@@ -18,12 +18,13 @@
 (def home (str "/home/" user))
 
 (def packages {
-  :base ["bluez" "chromium" "emacs-gtk3" "fish-shell" "firefox" "flatpak" "git" "htop" "pass" "ranger" "thunar-archive-plugin" "wget" "xarchiver"]
+  :base ["bluez" "chromium" "emacs-gtk3" "fish-shell" "firefox" "flameshot" "flatpak" "git" "htop" "pass" "ranger" "Signal-Desktop" "thunar-archive-plugin" "wget" "xarchiver" "xclip"]
   :work ["kotlin-bin" "scrcpy"]
 })
 
 (def flatpak-packages {
   :work ["com.getpostman.Postman" "com.slack.Slack"]
+  :game ["com.discordapp.Discord"]
 })
 
 (def toolbox-link "https://download.jetbrains.com/toolbox/jetbrains-toolbox-2.1.1.18388.tar.gz")

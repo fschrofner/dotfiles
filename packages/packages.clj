@@ -1,20 +1,14 @@
 #!/usr/bin/env bb
 
 (require 
-  '[babashka.fs :as fs]
-  '[clojure.tools.cli :refer [parse-opts]]
-  '[clojure.string :as string])
+  '[babashka.fs :as fs])
 
 ;;todo: import from base.clj
 (defn- safe-sh [& commands]
   (as-> (apply shell/sh commands) $
     (if (= (:exit $) 0) $ (throw (Exception. (:err $))))))
 
-(def cli-options
-  [["-u" "--user USER" "The user to set up"]])
-
-(def options (:options (parse-opts *command-line-args* cli-options)))
-(def user (:user options))
+(def user (System/getenv "SUDO_USER"))
 (def home (str "/home/" user))
 
 (def packages {

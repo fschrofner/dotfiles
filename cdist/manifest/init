@@ -1,4 +1,0 @@
-#!/bin/sh -e
-
-# once there are more types, this should be handled by a parameter
-__manjaro_desktop

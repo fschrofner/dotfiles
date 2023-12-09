@@ -12,7 +12,7 @@
 (def home (str "/home/" user))
 
 (def packages {
-  :base ["bluez" "chromium" "emacs-gtk3" "fish-shell" "firefox" "flameshot" "flatpak" "git" "htop" "i3" "pass" "ranger" "Signal-Desktop" "thunar-archive-plugin" "wget" "xarchiver" "xclip" "xfce4-i3-workspaces-plugin"]
+  :base ["bluez" "chromium" "curl" "emacs-gtk3" "fish-shell" "firefox" "flameshot" "flatpak" "git" "htop" "i3" "pass" "ranger" "Signal-Desktop" "thunar-archive-plugin" "unzip" "wget" "xarchiver" "xclip" "xfce4-i3-workspaces-plugin"]
   :work ["kotlin-bin" "scrcpy"]
 })
 
@@ -20,8 +20,6 @@
   :work ["com.getpostman.Postman" "com.slack.Slack"]
   :game ["com.discordapp.Discord"]
 })
-
-(def toolbox-link "https://download.jetbrains.com/toolbox/jetbrains-toolbox-2.1.1.18388.tar.gz")
 
 ;;todo: allow to pick specific package sets later
 
@@ -38,17 +36,38 @@
   (apply safe-sh (concat ["flatpak" "install" "flathub" "--noninteractive"] packages-to-install)))
 (println "flatpak packages installed")
 
+
+(def toolbox-link "https://download.jetbrains.com/toolbox/jetbrains-toolbox-2.1.1.18388.tar.gz")
+
+(def http-toolkit-version "1.14.8")
+(def http-toolkit-link (str "https://github.com/httptoolkit/httptoolkit-desktop/releases/download/v" http-toolkit-version "/HttpToolkit-linux-x64-" http-toolkit-version ".zip"))
+
+(defn- install-application [link filename target-directory extract-command]
+  (let [download-file-path (str home "/Downloads/" filename)
+        download-file (fs/file download-file-path)]
+    (safe-sh "wget" "-O" download-file-path link)
+    (fs/delete-tree target-directory)
+    (fs/create-dirs target-directory)
+    (extract-command download-file-path target-directory)
+    (fs/delete download-file)
+    (safe-sh "chown" (str user ":" user) "-R" target-directory)))
+
 ;;installing jetbrains toolbox
 (println "installing jetbrains toolbox..")
-(let [download-file-path (str home "/Downloads/toolbox.tar.gz")
-      target-directory (str home "/Applications/JetbrainsToolbox")
-      download-file (fs/file download-file-path)]
-  (safe-sh "wget" "-O" download-file-path toolbox-link)
-  (fs/delete-tree target-directory)
-  (fs/create-dirs target-directory)
-  (safe-sh "tar" "-xzf" download-file-path "-C" target-directory)
-  (fs/delete download-file)
-  (safe-sh "chown" (str user ":" user) "-R" target-directory))
+(let [target-directory (str home "/Applications/JetbrainsToolbox")]
+  (install-application
+   toolbox-link
+   "toolbox.tar.gz"
+   target-directory
+   #(safe-sh "tar" "-xzf" %1 "-C" %2)))
 (println "jetbrains toolbox installed")
 
-;;todo: installing http toolkit
+;;installing http toolkit
+(println "installing http toolkit..")
+(let [target-directory (str home "/Applications/HttpToolkit")]
+  (install-application
+   http-toolkit-link
+   "httptoolkit.zip"
+   target-directory
+   #(safe-sh "unzip" %1 "-d" %2)))
+(println "http toolkit installed")

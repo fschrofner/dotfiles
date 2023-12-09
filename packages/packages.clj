@@ -26,7 +26,7 @@
 ;;todo: allow to pick specific package sets later
 
 ;;installing normal xbps packages
-(println "installing packages...")
+(println "installing packages..")
 (let [packages-to-install (flatten (vals packages))]
   (apply safe-sh (concat ["xbps-install" "-y"] packages-to-install)))
 (println "packages installed")
@@ -40,12 +40,15 @@
 
 ;;installing jetbrains toolbox
 (println "installing jetbrains toolbox..")
-(let [download-file (str home "/Downloads/toolbox.tar.gz")
-     target-directory (str home "/Applications/JetbrainsToolbox")]
-  (safe-sh "wget" "-O" download-file toolbox-link)
+(let [download-file-path (str home "/Downloads/toolbox.tar.gz")
+      target-directory (str home "/Applications/JetbrainsToolbox")
+      download-file (fs/file download-file-path)]
+  (safe-sh "wget" "-O" download-file-path toolbox-link)
   (fs/delete-tree target-directory)
   (fs/create-dirs target-directory)
-  (fs/gunzip download-file target-directory {:replace-existing true})
-  (fs/delete (fs/file download-file))
+  (safe-sh "tar" "-xzf" download-file-path "-C" target-directory)
+  (fs/delete download-file)
   (safe-sh "chown" (str user ":" user) "-R" target-directory))
 (println "jetbrains toolbox installed")
+
+;;todo: installing http toolkit

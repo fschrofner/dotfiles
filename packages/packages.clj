@@ -12,7 +12,7 @@
 (def home (str "/home/" user))
 
 (def packages {
-  :base ["bluez" "chromium" "curl" "emacs-gtk3" "fish-shell" "firefox" "flameshot" "flatpak" "git" "htop" "i3" "pass" "ranger" "Signal-Desktop" "thunar-archive-plugin" "unzip" "wget" "xarchiver" "xclip" "xfce4-i3-workspaces-plugin"]
+               :base ["bluez" "chromium" "curl" "emacs-gtk3" "engrampa" "feh" "fish-shell" "firefox" "flameshot" "flatpak" "font-firacode" "gimp" "git" "htop" "i3" "i3status" "mate" "mate-power-manager" "mate-terminal" "mate-utils" "pass" "ranger" "Signal-Desktop" "thunar-archive-plugin" "unzip" "wget" "xbindkeys" "xclip" "xz"]
   :work ["kotlin-bin" "scrcpy"]
 })
 
@@ -53,21 +53,26 @@
     (safe-sh "chown" (str user ":" user) "-R" target-directory)))
 
 ;;installing jetbrains toolbox
-(println "installing jetbrains toolbox..")
+(defn- install-jetbrains-toolbox []
+ (println "installing jetbrains toolbox..")
 (let [target-directory (str home "/Applications/JetbrainsToolbox")]
   (install-application
    toolbox-link
    "toolbox.tar.gz"
    target-directory
    #(safe-sh "tar" "-xzf" %1 "-C" %2)))
-(println "jetbrains toolbox installed")
+(println "jetbrains toolbox installed"))
 
 ;;installing http toolkit
-(println "installing http toolkit..")
-(let [target-directory (str home "/Applications/HttpToolkit")]
+(defn- install-http-toolkit []
+  (println "installing http toolkit..")
+  (let [target-directory (str home "/Applications/HttpToolkit")]
   (install-application
    http-toolkit-link
    "httptoolkit.zip"
    target-directory
    #(safe-sh "unzip" %1 "-d" %2)))
-(println "http toolkit installed")
+(println "http toolkit installed"))
+
+;;(install-jetbrains-toolbox)
+;;(install-http-toolkit)

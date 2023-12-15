@@ -19,7 +19,7 @@
   ;; installing spacemacs
   (println "setting up spacemacs..")
   (-> (fs/file (str home "/.emacs.d")) (fs/delete-tree))
-  (safe-sh "git" "clone" "https://github.com/syl20bnr/spacemacs" (str home "/.emacs.d"))
+  (safe-sh-as-user "git" "clone" "https://github.com/syl20bnr/spacemacs" (str home "/.emacs.d"))
   (safe-sh "chown" (str user ":" user) "-R" (str home "/.emacs.d"))
   (println "spacemacs set up"))
 
@@ -31,13 +31,17 @@
 
 (defn- setup-i3 []
   (println "setting up i3..")
-  (println "clearing xfce keyboard bindings..")
-  (as-> (safe-sh "xfconf-query" "--channel" "xfce4-keyboard-shortcuts" "--list") $
-    (:out $)
-    (str/split-lines $)
-    (doseq [property $]
-      ;;we actually need to ignore errors here, as we will hit a few undefined properties
-      (shell/sh "xfconf-query" "--channel" "xfce4-keyboard-shortcuts" "--property" property "--set" ""))))
+  (println "setting i3 as default wm..")
+  (safe-sh-as-user "gsettings" "set" "org.mate.session.required-components" "windowmanager" "i3")
+  (safe-sh-as-user "gsettings" "set" "org.mate.session" "required-components-list" "['windowmanager', 'panel', 'dock']"))
+
+(defn- setup-theme []
+  (println "setting up fonts..")
+  (safe-sh-as-user "gsettings" "set" "org.mate.interface" "font-name" "Fira Code Regular 10.0")
+  (safe-sh-as-user "gsettings" "set" "org.mate.interface" "document-font-name" "Fira Code Regular 10.0")
+  (safe-sh-as-user "gsettings" "set" "org.mate.interface" "monospace-font-name" "Fira Code Regular 10.0")
+  (safe-sh-as-user "gsettings" "set" "org.mate.Marco.general" "titlebar-font" "Fira Code Bold 10.0")
+  (safe-sh-as-user "gsettings" "set" "org.mate.caja.desktop" "font" "Fira Code Regular 10.0"))
 
 ;;todo: fetch spacemacs
 ;;todo: disable locking when closing lid on ac
@@ -55,6 +59,7 @@
 
 (setup-i3)
 (println "set up i3")
+(setup-theme)
 
 ;;creating projects dir
 (let [projects-dir (str home "/Projects")]

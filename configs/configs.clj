@@ -2,9 +2,19 @@
 
 (require 
   '[babashka.fs :as fs]
-  '[clojure.string :as str])
+  '[clojure.string :as str]
+  '[clojure.tools.cli :refer [parse-opts]])
+
+(def parsed-params (parse-opts *command-line-args* {}))
+(def script-base-dir (first (:arguments parsed-params)))
+
+(if (nil? script-base-dir)
+  (throw (Exception. "error: script base dir needs to be provided as first arg!")))
 
 (def user (System/getenv "SUDO_USER"))
+(if (nil? user)
+  (throw (Exception. "error: script needs to be executed with sudo!")))
+
 (def home (str "/home/" user))
 
 ;;todo: import from base.clj
@@ -20,14 +30,13 @@
   (println "setting up spacemacs..")
   (-> (fs/file (str home "/.emacs.d")) (fs/delete-tree))
   (safe-sh-as-user "git" "clone" "https://github.com/syl20bnr/spacemacs" (str home "/.emacs.d"))
-  (safe-sh "chown" (str user ":" user) "-R" (str home "/.emacs.d"))
   (println "spacemacs set up"))
 
 (defn- setup-android-scripts []
   (let [android-scripts-dir (str home "/Projects/android-scripts")]
     (fs/create-dirs android-scripts-dir)
-    (safe-sh "git" "clone" "ssh://git@git.schro.fi:4242/schrofi/android-scripts.git" android-scripts-dir)
-    (safe-sh "chown" (str user ":" user) "-R" android-scripts-dir)))
+    (safe-sh "chown" "-R" (str user ":" user) android-scripts-dir)
+    (safe-sh-as-user "git" "clone" "ssh://git@git.schro.fi:4242/schrofi/android-scripts.git" android-scripts-dir)))
 
 (defn- setup-i3 []
   (println "setting up i3..")
@@ -41,7 +50,18 @@
   (safe-sh-as-user "gsettings" "set" "org.mate.interface" "document-font-name" "Fira Code Regular 10.0")
   (safe-sh-as-user "gsettings" "set" "org.mate.interface" "monospace-font-name" "Fira Code Regular 10.0")
   (safe-sh-as-user "gsettings" "set" "org.mate.Marco.general" "titlebar-font" "Fira Code Bold 10.0")
-  (safe-sh-as-user "gsettings" "set" "org.mate.caja.desktop" "font" "Fira Code Regular 10.0"))
+  (safe-sh-as-user "gsettings" "set" "org.mate.caja.desktop" "font" "Fira Code Regular 10.0")
+  (safe-sh-as-user "ln" "-fs" (str script-base-dir "/configs/config-files/gtk-config") "~/.gtkrc-2.0")
+  (safe-sh-as-user "ln" "-fs" (str script-base-dir "/configs/config-files/i3-config") "~/.config/i3/config")
+  (println "linking wallpaper..")
+  (safe-sh-as-user "ln" "-fs" (str script-base-dir "/configs/config-files/wallpaper.jpg") "~/Pictures/wallpaper.jpg")
+  (safe-sh-as-user "gsettings" "set" "org.mate.background" "picture-filename" "~/Pictures/wallpaper.jpg"))
+
+(defn- setup-system-services []
+  (println "setting up system services..")
+  ;;todo
+  ;;(fs/file ())
+  )
 
 ;;todo: fetch spacemacs
 ;;todo: disable locking when closing lid on ac

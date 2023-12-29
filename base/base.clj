@@ -3,6 +3,8 @@
 (require 
  '[clojure.string :as str])
 
+(def user (System/getenv "SUDO_USER"))
+
 ;;executes shell command but throws exception on error
 (defn- safe-sh [& commands]
   (as-> (apply shell/sh commands) $
@@ -11,3 +13,4 @@
 ;;executes command as user calling this script with sudo
 (defn- safe-sh-as-user [& commands]
   (safe-sh "su" "-c" (str/join " " (map #(if (str/includes? % " ") (str "\"" % "\"") %) commands)) user))
+

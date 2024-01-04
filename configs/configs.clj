@@ -52,6 +52,7 @@
   (safe-sh-as-user "gsettings" "set" "org.mate.Marco.general" "titlebar-font" "Fira Code Bold 10.0")
   (safe-sh-as-user "gsettings" "set" "org.mate.caja.desktop" "font" "Fira Code Regular 10.0")
   (safe-sh-as-user "ln" "-fs" (str script-base-dir "/configs/config-files/gtk-config") "~/.gtkrc-2.0")
+  (safe-sh-as-user "mkdir" "-p" "~/.config/i3")
   (safe-sh-as-user "ln" "-fs" (str script-base-dir "/configs/config-files/i3-config") "~/.config/i3/config")
   (println "linking wallpaper..")
   (safe-sh-as-user "ln" "-fs" (str script-base-dir "/configs/config-files/wallpaper.jpg") "~/Pictures/wallpaper.jpg")

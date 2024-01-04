@@ -11,9 +11,11 @@
 (def user (System/getenv "SUDO_USER"))
 (def home (str "/home/" user))
 
+(safe-sh "xbps-install" "-Sy" "void-repo-nonfree")
+
 (def packages {
-               :base ["bluez" "chromium" "curl" "emacs-gtk3" "engrampa" "feh" "fish-shell" "firefox" "flameshot" "flatpak" "font-firacode" "gimp" "git" "htop" "i3" "i3status" "mate" "mate-power-manager" "mate-terminal" "mate-utils" "pass" "ranger" "Signal-Desktop" "thunar-archive-plugin" "unzip" "wget" "xbindkeys" "xclip" "xz"]
-  :work ["kotlin-bin" "scrcpy"]
+               :base ["bluez" "chromium" "curl" "emacs-gtk3" "engrampa" "feh" "fish-shell" "firefox" "flameshot" "flatpak" "font-firacode" "gimp" "git" "htop" "intel-ucode" "i3" "i3status" "mate" "mate-power-manager" "mate-terminal" "mate-utils" "pass" "ranger" "Signal-Desktop" "steam" "thunar-archive-plugin" "unzip" "wget" "xbindkeys" "xclip" "xz"]
+  :work ["git-lfs" "kotlin-bin" "scrcpy"]
 })
 
 (def flatpak-packages {
@@ -74,5 +76,9 @@
    #(safe-sh "unzip" %1 "-d" %2)))
 (println "http toolkit installed"))
 
-;;(install-jetbrains-toolbox)
-;;(install-http-toolkit)
+(let [applications-dir (str home "/Applications")]
+  (fs/create-dirs applications-dir)
+  (safe-sh "chown" (str user ":" user) "-R" applications-dir))
+
+(install-jetbrains-toolbox)
+(install-http-toolkit)

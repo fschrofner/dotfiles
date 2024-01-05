@@ -60,15 +60,14 @@
 
 (defn- setup-system-services []
   (println "setting up system services..")
-  ;;todo
-  ;;(fs/file ())
-  )
+  ;;todo: user services
+  (safe-sh "ln" "-s" "/etc/sv/bluetoothd" "/var/service")
+  (safe-sh "usermod" "-a" "-G" "bluetooth" user))
 
-;;todo: fetch spacemacs
 ;;todo: disable locking when closing lid on ac
 (println "applying configuration..")
 
-;;(setup-spacemacs)
+(setup-spacemacs)
 
 ;;change shell to fish
 (safe-sh "chsh" "-s" "/usr/bin/fish" user)
@@ -90,5 +89,9 @@
 
 (setup-android-scripts)
 (println "set up android scripts")
+
+(setup-system-services)
+(println "set up system services")
+
 
 (println "configuration applied")

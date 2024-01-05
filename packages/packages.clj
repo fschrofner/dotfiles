@@ -12,9 +12,12 @@
 (def home (str "/home/" user))
 
 (safe-sh "xbps-install" "-Sy" "void-repo-nonfree")
+(safe-sh "xbps-install" "-Sy" "void-repo-multilib")
+(safe-sh "xbps-install" "-Sy" "void-repo-multilib-nonfree")
+(safe-sh "xbps-install" "-S")
 
 (def packages {
-               :base ["bluez" "chromium" "curl" "emacs-gtk3" "engrampa" "feh" "fish-shell" "firefox" "flameshot" "flatpak" "font-firacode" "gimp" "git" "htop" "intel-ucode" "i3" "i3status" "mate" "mate-power-manager" "mate-terminal" "mate-utils" "pass" "ranger" "Signal-Desktop" "steam" "thunar-archive-plugin" "unzip" "wget" "xbindkeys" "xclip" "xz"]
+               :base ["bluez" "chromium" "curl" "emacs-gtk3" "engrampa" "feh" "fish-shell" "firefox" "flameshot" "flatpak" "font-firacode" "gimp" "git" "htop" "intel-ucode" "i3" "i3status" "libgcc-32bit" "libstdc++-32bit" "libdrm-32bit" "libglvnd-32bit" "mate" "mate-power-manager" "mate-terminal" "mate-utils" "pass" "ranger" "Signal-Desktop" "steam" "thunar-archive-plugin" "unzip" "wget" "xbindkeys" "xclip" "xz"]
   :work ["git-lfs" "kotlin-bin" "scrcpy"]
 })
 

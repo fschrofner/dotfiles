@@ -17,7 +17,7 @@
 (safe-sh "xbps-install" "-S")
 
 (def packages {
-               :base ["bluez" "chromium" "curl" "emacs-gtk3" "engrampa" "feh" "fish-shell" "firefox" "flameshot" "flatpak" "font-firacode" "gimp" "git" "htop" "intel-ucode" "i3" "i3status" "libgcc-32bit" "libstdc++-32bit" "libdrm-32bit" "libglvnd-32bit" "mate" "mate-power-manager" "mate-terminal" "mate-utils" "pass" "ranger" "Signal-Desktop" "steam" "thunar-archive-plugin" "unzip" "wget" "xbindkeys" "xclip" "xz"]
+               :base ["bluez" "chromium" "curl" "emacs-gtk3" "engrampa" "feh" "fish-shell" "firefox" "flameshot" "flatpak" "font-firacode" "gimp" "git" "guvcview" "htop" "intel-ucode" "inxi" "i3" "i3status" "libgcc-32bit" "libstdc++-32bit" "libdrm-32bit" "libglvnd-32bit" "mate" "mate-power-manager" "mate-terminal" "mate-utils" "pass" "ranger" "rofi" "Signal-Desktop" "steam" "thunar-archive-plugin" "unzip" "wget" "xbindkeys" "xclip" "xz"]
   :work ["git-lfs" "kotlin-bin" "scrcpy"]
 })
 

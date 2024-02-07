@@ -62,6 +62,7 @@ bindsym Print exec flameshot gui
 
 # kill focused window
 bindsym $mod+minus kill
+bindsym $mod+t kill
 
 # start rofi (a program launcher)
 bindsym $mod+a exec --no-startup-id rofi -show drun

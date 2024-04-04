@@ -17,7 +17,7 @@
 (safe-sh "xbps-install" "-S")
 
 (def packages {
-               :base ["alsa-firmware" "avahi" "bluez" "chromium" "curl" "cups" "cups-filters" "emacs-gtk3" "engrampa" "feh" "fish-shell" "firefox" "flameshot" "flatpak" "font-firacode" "foomatic-db" "foomatic-db-nonfree" "gimp" "git" "git-annex" "guvcview" "htop" "intel-ucode" "inxi" "i3" "i3status" "libgcc-32bit" "libstdc++-32bit" "libdrm-32bit" "libglvnd-32bit" "mate" "mate-extra" "mate-power-manager" "mate-terminal" "mate-utils" "nss-mdns" "pass" "ranger" "rofi" "Signal-Desktop" "sof-firmware" "sox" "ssr" "steam" "sysfsutils" "the_silver_searcher" "thunar-archive-plugin" "unzip" "wget" "xbindkeys" "xclip" "xz"]
+               :base ["alsa-firmware" "avahi" "bluez" "chromium" "clojure" "curl" "cups" "cups-filters" "emacs-gtk3" "engrampa" "feh" "fish-shell" "firefox" "flameshot" "flatpak" "font-firacode" "foomatic-db" "foomatic-db-nonfree" "gimp" "git" "git-annex" "gparted" "guvcview" "htop" "intel-ucode" "inxi" "i3" "i3status" "libgcc-32bit" "libstdc++-32bit" "libdrm-32bit" "libglvnd-32bit" "mate" "mate-extra" "mate-power-manager" "mate-terminal" "mate-utils" "mtools" "nss-mdns" "pass" "ranger" "rofi" "Signal-Desktop" "sof-firmware" "sox" "ssr" "steam" "sysfsutils" "the_silver_searcher" "thunar-archive-plugin" "udevil" "unzip" "wget" "xbindkeys" "xclip" "xz"]
                :work ["android-udev-rules" "filezilla" "git-lfs" "kotlin-bin" "libcxx" "libcxxabi" "scrcpy"]
                :intel ["mesa-intel-dri" "libva-intel-driver" "mesa-dri-32bit"]
                :amd ["amdvlk" "amdvlk-32bit" "mesa-dri-32bit" "mesa-vulkan-radeon" "mesa-vaapi" "mesa-vdpau" "vulkan-loader"]
@@ -44,9 +44,9 @@
 (println "flatpak packages installed")
 
 
-(def toolbox-link "https://download.jetbrains.com/toolbox/jetbrains-toolbox-2.1.1.18388.tar.gz")
+(def toolbox-link "https://download-cdn.jetbrains.com/toolbox/jetbrains-toolbox-2.2.3.20090.tar.gz")
 
-(def http-toolkit-version "1.14.8")
+(def http-toolkit-version "1.14.11")
 (def http-toolkit-link (str "https://github.com/httptoolkit/httptoolkit-desktop/releases/download/v" http-toolkit-version "/HttpToolkit-linux-x64-" http-toolkit-version ".zip"))
 
 (defn- install-application [link filename target-directory extract-command]

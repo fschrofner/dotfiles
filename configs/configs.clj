@@ -39,16 +39,20 @@
     (safe-sh "chown" "-R" (str user ":" user) android-scripts-dir)
     (safe-sh-as-user "git" "clone" "ssh://git@git.schro.fi:4242/schrofi/android-scripts.git" android-scripts-dir)))
 
+(defn- copy-config-file [src dest]
+  ;; make sure the parent directory of destination file exists
+  (-> (fs/file dest) (fs/parent) (fs/create-dirs))
+  (safe-sh-as-user "ln" "-fs" src dest))
 
 (defn- link-config-files []
   (println "setting gtk theme..")
   (safe-sh-as-user "ln" "-fs" (str script-base-dir "/configs/config-files/gtk-config") "~/.gtkrc-2.0")
   (println "linking wallpaper..")
-  (safe-sh-as-user "ln" "-fs" (str script-base-dir "/configs/config-files/wallpaper.jpg") "~/Pictures/wallpaper.jpg")
-  (safe-sh-as-user "ln" "-fs" (str script-base-dir "/configs/config-files/bspwm-config") "~/.config/bspwm/bspwmrc")
-  (safe-sh-as-user "ln" "-fs" (str script-base-dir "/configs/config-files/picom-config") "~/.config/picom/picom.conf")
-  (safe-sh-as-user "ln" "-fs" (str script-base-dir "/configs/config-files/alacritty-config") "~/.config/alacritty/alacritty.toml")
-  (safe-sh-as-user "ln" "-fs" (str script-base-dir "/configs/config-files/sxhkd-config") "~/.config/sxhkd/sxhkdrc"))
+  (copy-config-file (str script-base-dir "/configs/config-files/wallpaper.jpg") "~/Pictures/wallpaper.jpg")
+  (copy-config-file (str script-base-dir "/configs/config-files/bspwm-config") "~/.config/bspwm/bspwmrc")
+  (copy-config-file (str script-base-dir "/configs/config-files/picom-config") "~/.config/picom/picom.conf")
+  (copy-config-file (str script-base-dir "/configs/config-files/alacritty-config") "~/.config/alacritty/alacritty.toml")
+  (copy-config-file (str script-base-dir "/configs/config-files/sxhkd-config") "~/.config/sxhkd/sxhkdrc"))
 
 (defn- setup-system-services []
   (println "setting up system services..")

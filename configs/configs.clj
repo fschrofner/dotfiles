@@ -53,7 +53,7 @@
 (defn- setup-system-services []
   (println "setting up system services..")
   ;;todo: user services
-  (safe-sh "ln" "-s" "/etc/sv/bluetoothd" "/var/service")
+  (safe-sh "ln" "-fs" "/etc/sv/bluetoothd" "/var/service")
   (safe-sh "usermod" "-a" "-G" "bluetooth" user))
 
 (defn- install-fish-functions []

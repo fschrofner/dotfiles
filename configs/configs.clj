@@ -44,10 +44,10 @@
   (safe-sh-as-user "ln" "-fs" (str script-base-dir "/configs/config-files/gtk-config") "~/.gtkrc-2.0")
   (println "linking wallpaper..")
   (safe-sh-as-user "ln" "-fs" (str script-base-dir "/configs/config-files/wallpaper.jpg") "~/Pictures/wallpaper.jpg")
-  (safe-sh "ln" "-fs" (str script-base-dir "/configs/config-files/bspwm-config") "~/.config/bspwm/bspwmrc")
-  (safe-sh "ln" "-fs" (str script-base-dir "/configs/config-files/picom-config") "~/.config/picom/picom.conf")
-  (safe-sh "ln" "-fs" (str script-base-dir "/configs/config-files/alacritty-config") "~/.config/alacritty/alacritty.toml")
-  (safe-sh "ln" "-fs" (str script-base-dir "/configs/config-files/sxhkd-config") "~/.config/sxhkd/sxhkdrc"))
+  (safe-sh-as-user "ln" "-fs" (str script-base-dir "/configs/config-files/bspwm-config") "~/.config/bspwm/bspwmrc")
+  (safe-sh-as-user "ln" "-fs" (str script-base-dir "/configs/config-files/picom-config") "~/.config/picom/picom.conf")
+  (safe-sh-as-user "ln" "-fs" (str script-base-dir "/configs/config-files/alacritty-config") "~/.config/alacritty/alacritty.toml")
+  (safe-sh-as-user "ln" "-fs" (str script-base-dir "/configs/config-files/sxhkd-config") "~/.config/sxhkd/sxhkdrc"))
 
 (defn- setup-system-services []
   (println "setting up system services..")

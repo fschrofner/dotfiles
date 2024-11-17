@@ -46,7 +46,7 @@
 
 (def toolbox-link "https://download-cdn.jetbrains.com/toolbox/jetbrains-toolbox-2.2.3.20090.tar.gz")
 
-(def http-toolkit-version "1.14.11")
+(def http-toolkit-version "1.19.1")
 (def http-toolkit-link (str "https://github.com/httptoolkit/httptoolkit-desktop/releases/download/v" http-toolkit-version "/HttpToolkit-linux-x64-" http-toolkit-version ".zip"))
 
 (defn- install-application [link filename target-directory extract-command]

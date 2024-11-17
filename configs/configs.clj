@@ -41,7 +41,7 @@
 
 (defn- link-config-file [src dest]
   ;; make sure the parent directory of destination file exists
-  (safe-sh-as-user "mkdir" "-p" dest)
+  (->> (fs/file dest) (fs/parent) (fs/path) (safe-sh-as-user "mkdir" "-p"))
   (safe-sh-as-user "ln" "-fs" src dest))
 
 (defn- link-config-files []

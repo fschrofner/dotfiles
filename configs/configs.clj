@@ -34,6 +34,7 @@
 
 (defn- setup-android-scripts []
   (let [android-scripts-dir (str home "/Projects/android-scripts")]
+    (-> (fs/file android-scripts-dir) (fs/delete-tree))
     (fs/create-dirs android-scripts-dir)
     (safe-sh "chown" "-R" (str user ":" user) android-scripts-dir)
     (safe-sh-as-user "git" "clone" "ssh://git@git.schro.fi:4242/schrofi/android-scripts.git" android-scripts-dir)))

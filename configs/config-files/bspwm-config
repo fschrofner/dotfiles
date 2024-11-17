@@ -1,0 +1,51 @@
+#!/usr/bin/env bb
+
+(require '[babashka.process :refer [shell process exec]])
+
+;; setup screens
+;; todo: check if file exists, get home dir
+(shell "/home/schrofi/.screenlayout/default.sh")
+
+;; bspwm configuration
+(defn- bspc [& commands]
+  (apply shell (cons "bspc" commands)))
+
+(defn- config [key value]
+    (apply bspc (vector "config" key value)))
+
+;; setup desktops
+;; todo: handle no external display gracefully
+(bspc "wm" "-O" "HDMI-A-0" "DisplayPort-2")
+
+(->> (range 1 10)
+     (map str)
+     (concat ["monitor" "DisplayPort-2" "-d"])
+     (apply bspc))
+
+(bspc "monitor" "HDMI-A-0" "-d" "X")
+
+(config "border_width" "2")
+(config "window_gap" "12")
+
+(config "split_ratio" "0.52")
+(config "borderless_monocle" "true")
+
+(config "focus_follows_pointer" "true")
+
+;; todo
+(bspc "rule" "-a" "alacritty:scratchpad" "-o" "state=floating" "sticky=on" "layer=above")
+
+;; autostart
+(defn- if-not-running [service run-command]
+  (if (empty? (:out (shell {:out :string :continue true} "pgrep" "-x" service)))
+    (run-command)))
+
+(shell "setxkbmap" "de")
+(if-not-running "sxhkd" #(process "sxhkd"))
+(if-not-running "nitrogen" #(process "nitrogen" "--restore"))
+(if-not-running "picom" #(process "picom" "--config" "/home/schrofi/.config/picom/picom.conf"))
+(if-not-running "polybar" #(process "polybar"))
+(if-not-running "flameshot" #(process "flameshot"))
+
+;; start pipewire
+;;(process "pipewire")

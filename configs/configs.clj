@@ -38,25 +38,16 @@
     (safe-sh "chown" "-R" (str user ":" user) android-scripts-dir)
     (safe-sh-as-user "git" "clone" "ssh://git@git.schro.fi:4242/schrofi/android-scripts.git" android-scripts-dir)))
 
-(defn- setup-i3 []
-  (println "setting up i3..")
-  (println "setting i3 as default wm..")
-  (safe-sh-as-user "gsettings" "set" "org.mate.session.required-components" "windowmanager" "i3")
-  (safe-sh-as-user "gsettings" "set" "org.mate.session" "required-components-list" "['windowmanager', 'panel', 'dock']"))
 
-(defn- setup-theme []
-  (println "setting up fonts..")
-  (safe-sh-as-user "gsettings" "set" "org.mate.interface" "font-name" "Fira Code Regular 10.0")
-  (safe-sh-as-user "gsettings" "set" "org.mate.interface" "document-font-name" "Fira Code Regular 10.0")
-  (safe-sh-as-user "gsettings" "set" "org.mate.interface" "monospace-font-name" "Fira Code Regular 10.0")
-  (safe-sh-as-user "gsettings" "set" "org.mate.Marco.general" "titlebar-font" "Fira Code Bold 10.0")
-  (safe-sh-as-user "gsettings" "set" "org.mate.caja.desktop" "font" "Fira Code Regular 10.0")
+(defn- link-config-files []
+  (println "setting gtk theme..")
   (safe-sh-as-user "ln" "-fs" (str script-base-dir "/configs/config-files/gtk-config") "~/.gtkrc-2.0")
-  (safe-sh-as-user "mkdir" "-p" "~/.config/i3")
-  (safe-sh-as-user "ln" "-fs" (str script-base-dir "/configs/config-files/i3-config") "~/.config/i3/config")
   (println "linking wallpaper..")
   (safe-sh-as-user "ln" "-fs" (str script-base-dir "/configs/config-files/wallpaper.jpg") "~/Pictures/wallpaper.jpg")
-  (safe-sh-as-user "gsettings" "set" "org.mate.background" "picture-filename" "~/Pictures/wallpaper.jpg"))
+  (safe-sh "ln" "-fs" (str script-base-dir "/configs/config-files/bspwm-config") "~/.config/bspwm/bspwmrc")
+  (safe-sh "ln" "-fs" (str script-base-dir "/configs/config-files/picom-config") "~/.config/picom/picom.conf")
+  (safe-sh "ln" "-fs" (str script-base-dir "/configs/config-files/alacritty-config") "~/.config/alacritty/alacritty.toml")
+  (safe-sh "ln" "-fs" (str script-base-dir "/configs/config-files/sxhkd-config") "~/.config/sxhkd/sxhkdrc"))
 
 (defn- setup-system-services []
   (println "setting up system services..")
@@ -64,22 +55,23 @@
   (safe-sh "ln" "-s" "/etc/sv/bluetoothd" "/var/service")
   (safe-sh "usermod" "-a" "-G" "bluetooth" user))
 
-;;todo: disable locking when closing lid on ac
-(println "applying configuration..")
+(defn- install-fish-functions []
+  ;;todo: symlink files in fish-functions to .config/fish/functions
+  )
 
+(println "applying configuration..")
 (setup-spacemacs)
 
 ;;change shell to fish
 (safe-sh "chsh" "-s" "/usr/bin/fish" user)
 (println "changed shell to fish")
 
+(println "setting up fish functions..")
+(install-fish-functions)
+
 (safe-sh-as-user "git" "config" "--global" "user.name" "Florian Schrofner")
 (safe-sh-as-user "git" "config" "--global" "user.email" "florian@schro.fi")
 (println "changed git user data")
-
-(setup-i3)
-(println "set up i3")
-(setup-theme)
 
 ;;creating projects dir
 (let [projects-dir (str home "/Projects")]
@@ -93,5 +85,5 @@
 (setup-system-services)
 (println "set up system services")
 
-
+(link-config-files)
 (println "configuration applied")

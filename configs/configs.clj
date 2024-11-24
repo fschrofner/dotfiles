@@ -53,7 +53,8 @@
   (link-config-file (str script-base-dir "/configs/config-files/bspwm-config") "~/.config/bspwm/bspwmrc")
   (link-config-file (str script-base-dir "/configs/config-files/picom-config") "~/.config/picom/picom.conf")
   (link-config-file (str script-base-dir "/configs/config-files/alacritty-config") "~/.config/alacritty/alacritty.toml")
-  (link-config-file (str script-base-dir "/configs/config-files/sxhkd-config") "~/.config/sxhkd/sxhkdrc"))
+  (link-config-file (str script-base-dir "/configs/config-files/sxhkd-config") "~/.config/sxhkd/sxhkdrc")
+    (link-config-file (str script-base-dir "/configs/config-files/rofi-config") "~/.config/rofi/config.rasi"))
 
 (defn- setup-system-services []
   (println "setting up system services..")

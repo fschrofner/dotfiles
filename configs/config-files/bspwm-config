@@ -15,14 +15,21 @@
 
 ;; setup desktops
 ;; todo: handle no external display gracefully
-(bspc "wm" "-O" "HDMI-A-0" "DisplayPort-2")
 
-(->> (range 1 10)
-     (map str)
-     (concat ["monitor" "DisplayPort-2" "-d"])
-     (apply bspc))
+;; read workspace configuration from config
+;; format should be like: eDP-1 1 2 3 4 .., HDMI-A-0 X
+;; where each monitor is defined on a separate line (no commas)
+(def workspace-config
+  (->> (slurp "/home/schrofi/.screenlayout/default-workspaces")
+       (str/split-lines)
+       (map #(str/split % #" "))))
 
-(bspc "monitor" "HDMI-A-0" "-d" "X")
+(doseq [config workspace-config]
+  (let [[monitor & workspaces] config]
+    (->> workspaces
+         (map str)
+         (concat ["monitor" monitor "-d"])
+         (apply bspc))))
 
 (config "border_width" "2")
 (config "window_gap" "12")

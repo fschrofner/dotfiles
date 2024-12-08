@@ -17,7 +17,7 @@
 (safe-sh "xbps-install" "-S")
 
 (def packages {
-               :base ["atool" "alacritty" "alsa-firmware" "avahi" "bind-utils" "bluez" "bspwm" "chromium" "clojure" "curl" "cups" "cups-filters" "dragon" "emacs-gtk3" "fish-shell" "firefox" "flameshot" "flatpak" "font-firacode" "foomatic-db" "foomatic-db-nonfree" "fuse-exfat" "gimp" "git" "git-annex" "gparted" "guvcview" "htop" "intel-ucode" "inxi" "leiningen" "libgcc-32bit" "libstdc++-32bit" "libdrm-32bit" "libglvnd-32bit" "mtools" "nitrogen" "nss-mdns" "pamixer" "pass" "picom" "playerctl" "polybar" "ranger" "rofi" "Signal-Desktop" "sof-firmware" "sox" "ssr" "steam" "sysfsutils" "sxhkd" "the_silver_searcher" "udevil" "unzip" "wget" "xbindkeys" "xclip" "xz"]
+               :base ["atool" "alacritty" "alsa-firmware" "avahi" "bind-utils" "bluez" "bspwm" "chromium" "clojure" "curl" "cups" "cups-filters" "dragon" "emacs-gtk3" "fish-shell" "firefox" "flameshot" "flatpak" "font-firacode" "foomatic-db" "foomatic-db-nonfree" "fuse-exfat" "gimp" "git" "git-annex" "gparted" "guvcview" "htop" "intel-ucode" "inxi" "leiningen" "libgcc-32bit" "libstdc++-32bit" "libdrm-32bit" "libglvnd-32bit" "mtools" "nitrogen" "nss-mdns" "pamixer" "pass" "picom" "playerctl" "polybar" "ranger" "rofi" "Signal-Desktop" "sof-firmware" "sox" "ssr" "steam" "sysfsutils" "sxhkd" "the_silver_searcher" "udevil" "unzip" "wget" "xbindkeys" "xdg-desktop-portal" "xdg-desktop-portal-gtk" "xclip" "xz"]
                :work ["android-udev-rules" "filezilla" "git-lfs" "kotlin-bin" "libcxx" "libbsd" "libcxxabi" "scrcpy"]
                :intel ["mesa-intel-dri" "libva-intel-driver" "mesa-dri-32bit"]
                :amd ["mesa-dri-32bit" "mesa-vulkan-radeon" "mesa-vaapi" "mesa-vdpau" "vulkan-loader"]

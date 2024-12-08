@@ -48,11 +48,17 @@
     (run-command)))
 
 (shell "setxkbmap" "de")
+;; this is needed for the gnome keyring to function properly
+(shell "dbus-launch" "--exit-with-session")
+(shell "dbus-update-activation-environment" "--all")
+(shell "gnome-keyring-daemon" "--start" "--components=secrets")
+
 (if-not-running "sxhkd" #(process "sxhkd"))
 (if-not-running "nitrogen" #(process "nitrogen" "--restore"))
 (if-not-running "picom" #(process "picom" "--config" "/home/schrofi/.config/picom/picom.conf"))
 (if-not-running "polybar" #(process "polybar"))
 (if-not-running "flameshot" #(process "flameshot"))
+
 
 ;; start pipewire
 ;;(process "pipewire")

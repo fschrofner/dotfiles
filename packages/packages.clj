@@ -24,6 +24,7 @@
 })
 
 (def flatpak-packages {
+  :base ["com.github.tchx84.Flatseal"]
   :work ["com.getpostman.Postman" "com.slack.Slack"]
   :game ["com.discordapp.Discord"]
 })
